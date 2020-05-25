@@ -1,30 +1,32 @@
 package com.notification.notifications.controllers;
 
+import com.notification.notifications.PerRequestIdStorage;
 import com.notification.notifications.models.Notification;
 import com.notification.notifications.services.NotificationService;
+import com.notification.notifications.transports.NotificationListTransport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/notification")
+@RequestMapping("/notifications")
 public class NotificationController {
 
     @Autowired
     private NotificationService notificationService;
 
     @GetMapping("/")
-    public List<Notification> findAllNotifications() {
-        return notificationService.listAllNotifications();
+    public NotificationListTransport getMyNotifications() {
+        return notificationService.listAllNotifications(PerRequestIdStorage.getUserId());
     }
 
-    //KTO DUHET ME RREGULLU
-    @PostMapping("/")
-    public Notification sendNotification(@RequestBody Notification notification) {
-        return notificationService.saveNotification(notification);
+    @PutMapping("/{notificationId}")
+    public void alterNotificationReadStatus(@PathVariable String notificationId, @RequestParam("isRead") boolean isRead) {
+        notificationService.updateNotificationReadStatus(notificationId, isRead);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -35,8 +37,8 @@ public class NotificationController {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/")
-    public void deleteAllNotifications() {
-        notificationService.deleteAllNotifications();
+    public void deleteMyNotifications() {
+        notificationService.deleteMyNotifications(PerRequestIdStorage.getUserId());
     }
 
 }

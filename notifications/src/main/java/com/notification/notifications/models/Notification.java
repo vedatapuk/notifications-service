@@ -10,8 +10,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "notification")
 public class Notification {
@@ -29,9 +27,23 @@ public class Notification {
     @Column(name = "notification_link")
     private String notificationLink;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "message_id")
-    private Message message;
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "read")
+    private boolean read;
+
+    @Column(name = "recipient_id")
+    private String recipientId;
+
+    public Notification(String notificationId, Timestamp createdDate, String notificationLink, String content, boolean read, String recipientId) {
+        this.notificationId = notificationId;
+        this.createdDate = createdDate;
+        this.notificationLink = notificationLink;
+        this.content = content;
+        this.read = read;
+        this.recipientId = recipientId;
+    }
 
     public String getNotificationId() {
         return notificationId;
@@ -57,11 +69,27 @@ public class Notification {
         this.notificationLink = notificationLink;
     }
 
-    public Message getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(Message message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
+    public String getRecipientId() {
+        return recipientId;
+    }
+
+    public void setRecipientId(String recipientId) {
+        this.recipientId = recipientId;
     }
 }

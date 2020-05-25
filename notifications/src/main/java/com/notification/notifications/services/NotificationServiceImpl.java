@@ -1,15 +1,17 @@
 package com.notification.notifications.services;
 
+import com.notification.notifications.mappers.NotificationMapper;
 import com.notification.notifications.models.Notification;
-import com.notification.notifications.repositories.MessageRepo;
 import com.notification.notifications.repositories.NotificationRepo;
+import com.notification.notifications.transports.NotificationListTransport;
+import com.notification.notifications.transports.NotificationTransport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -17,22 +19,36 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     private NotificationRepo notificationRepo;
 
-    public List<Notification> listAllNotifications() {
-        return notificationRepo.findAll();
+    @Override
+    public NotificationListTransport listAllNotifications(String userId) {
+        List<Notification> notifications = notificationRepo.findByRecipientId(userId);
+        return new NotificationListTransport(notifications.stream().map(NotificationMapper::notificationToNotificationTransport).collect(Collectors.toList()));
     }
 
-    public Notification saveNotification(Notification notification) {
-        return notificationRepo.save(notification);
+    @Override
+    public void saveNotification(NotificationTransport notificationTransport) {
+        Notification notification = new Notification(UUID.randomUUID().toString(), notificationTransport.getCreatedDate(),
+                notificationTransport.getNotificationLink(), notificationTransport.getContent(), notificationTransport.isRead(),
+                notificationTransport.getRecipientId());
+        notificationRepo.save(notification);
     }
 
+    @Override
     public void deleteNotificationById(String id) {
         notificationRepo.deleteById(id);
     }
 
-    public void deleteAllNotifications() {
-        notificationRepo.deleteAll();
+    @Override
+    public void updateNotificationReadStatus(String notificationId, boolean isRead) {
+        Notification notification = notificationRepo.findById(notificationId).orElseThrow(() -> new NoSuchElementException("Notification not found!"));
+        notification.setRead(isRead);
+        notificationRepo.save(notification);
     }
 
+    @Override
+    public void deleteMyNotifications(String userId) {
+        notificationRepo.deleteByRecipientId(userId);
+    }
 
 
 }

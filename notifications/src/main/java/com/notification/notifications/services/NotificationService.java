@@ -1,17 +1,18 @@
 package com.notification.notifications.services;
 
-import com.notification.notifications.models.Notification;
-
-import java.util.List;
+import com.notification.notifications.transports.NotificationListTransport;
+import com.notification.notifications.transports.NotificationTransport;
 
 public interface NotificationService {
 
-    List<Notification> listAllNotifications();
+    NotificationListTransport listAllNotifications(String userId);
 
-    Notification saveNotification(Notification notification);
+    void saveNotification(NotificationTransport notificationTransport);
+
+    void updateNotificationReadStatus(String notificationId, boolean isRead);
 
     void deleteNotificationById(String id);
 
-    void deleteAllNotifications();
+    void deleteMyNotifications(String userId);
 
 }

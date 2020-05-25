@@ -1,0 +1,13 @@
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/transports/NotificationListTransport.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/controllers/NotificationController.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/repositories/NotificationRepo.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/PerRequestIdStorage.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/transports/NotificationTransport.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/NotificationsApplication.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/models/Notification.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/security/SecurityConstants.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/mappers/NotificationMapper.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/security/JWTAuthorizationFilter.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/services/NotificationService.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/services/NotificationServiceImpl.java
+/Users/rinor/Documents/workspace/microservices/notification-microservice/notifications-service/notifications/src/main/java/com/notification/notifications/security/WebSecurity.java
