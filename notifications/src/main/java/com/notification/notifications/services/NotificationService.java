@@ -1,5 +1,6 @@
 package com.notification.notifications.services;
 
+import com.notification.notifications.integration.models.SerializableNotification;
 import com.notification.notifications.transports.NotificationListTransport;
 import com.notification.notifications.transports.NotificationTransport;
 
@@ -15,4 +16,5 @@ public interface NotificationService {
 
     void deleteMyNotifications(String userId);
 
+    void buildNotifications(SerializableNotification serializableNotification);
 }
