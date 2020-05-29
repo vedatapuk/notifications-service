@@ -8,11 +8,10 @@ import com.notification.notifications.transports.NotificationListTransport;
 import com.notification.notifications.transports.NotificationTransport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,24 +28,26 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void saveNotification(NotificationTransport notificationTransport) {
-        Notification notification = new Notification(UUID.randomUUID().toString(), notificationTransport.getCreatedDate(),
+        Notification notification = new Notification(notificationTransport.getCreatedDate(),
                 notificationTransport.getNotificationLink(), notificationTransport.getContent(), notificationTransport.isRead(),
                 notificationTransport.getRecipientId());
         notificationRepo.save(notification);
     }
 
+    @Transactional
     @Override
     public void deleteNotificationById(String id) {
         notificationRepo.deleteById(id);
     }
 
     @Override
-    public void updateNotificationReadStatus(String notificationId, boolean isRead) {
+    public void updateNotificationReadStatus(String notificationId, boolean isOpened) {
         Notification notification = notificationRepo.findById(notificationId).orElseThrow(() -> new NoSuchElementException("Notification not found!"));
-        notification.setRead(isRead);
+        notification.setOpened(isOpened);
         notificationRepo.save(notification);
     }
 
+    @Transactional
     @Override
     public void deleteMyNotifications(String userId) {
         notificationRepo.deleteByRecipientId(userId);
@@ -54,11 +55,13 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void buildNotifications(SerializableNotification serializableNotification) {
+        List<Notification> notifications = new ArrayList<>();
         for(String recipientId : serializableNotification.getRecipients()) {
-            Notification notification = new Notification(UUID.randomUUID().toString(), new Timestamp(System.currentTimeMillis()), "",
-                    serializableNotification.getContent(), false, recipientId);
-            notificationRepo.save(notification);
+            Notification notification = new Notification(new Timestamp(System.currentTimeMillis()), "/notifications/list",
+                    serializableNotification.getContent(), recipientId);
+            notifications.add(notification);
         }
+        notificationRepo.saveAll(notifications);
     }
 
 }

@@ -10,7 +10,7 @@ public interface NotificationService {
 
     void saveNotification(NotificationTransport notificationTransport);
 
-    void updateNotificationReadStatus(String notificationId, boolean isRead);
+    void updateNotificationReadStatus(String notificationId, boolean isOpened);
 
     void deleteNotificationById(String id);
 

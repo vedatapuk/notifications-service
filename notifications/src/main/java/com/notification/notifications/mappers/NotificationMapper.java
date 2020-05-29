@@ -6,8 +6,8 @@ import com.notification.notifications.transports.NotificationTransport;
 public class NotificationMapper {
 
     public static NotificationTransport notificationToNotificationTransport(Notification notification) {
-        return new NotificationTransport(notification.getNotificationId(), notification.getCreatedDate(),
-                notification.getNotificationLink(), notification.getContent(), notification.isRead(),
+        return new NotificationTransport(notification.getId(), notification.getCreatedDate(),
+                notification.getNotificationLink(), notification.getContent(), notification.isOpened(),
                 notification.getRecipientId());
     }
 

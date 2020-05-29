@@ -13,30 +13,30 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/notifications")
+@RequestMapping("notifications")
 public class NotificationController {
 
     @Autowired
     private NotificationService notificationService;
 
-    @GetMapping("/")
+    @GetMapping
     public NotificationListTransport getMyNotifications() {
         return notificationService.listAllNotifications(PerRequestIdStorage.getUserId());
     }
 
-    @PutMapping("/{notificationId}")
-    public void alterNotificationReadStatus(@PathVariable String notificationId, @RequestParam("isRead") boolean isRead) {
-        notificationService.updateNotificationReadStatus(notificationId, isRead);
+    @PutMapping("{notificationId}")
+    public void alterNotificationReadStatus(@PathVariable String notificationId, @RequestParam("isOpened") boolean isOpened) {
+        notificationService.updateNotificationReadStatus(notificationId, isOpened);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public void deleteNotification(@PathVariable String id) {
         notificationService.deleteNotificationById(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/")
+    @DeleteMapping
     public void deleteMyNotifications() {
         notificationService.deleteMyNotifications(PerRequestIdStorage.getUserId());
     }

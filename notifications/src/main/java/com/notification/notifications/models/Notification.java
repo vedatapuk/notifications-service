@@ -1,15 +1,11 @@
 package com.notification.notifications.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
 @Entity
 @Table(name = "notification")
 public class Notification {
@@ -17,8 +13,8 @@ public class Notification {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "notification_id", columnDefinition = "VARCHAR(255)")
-    private String notificationId;
+    @Column(name = "id", columnDefinition = "NVARCHAR(36)")
+    private String id;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "created_date")
@@ -30,27 +26,46 @@ public class Notification {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "read")
-    private boolean read;
+    @Column(name = "opened", columnDefinition = "boolean default 0")
+    private Boolean opened = false;
 
     @Column(name = "recipient_id")
     private String recipientId;
 
-    public Notification(String notificationId, Timestamp createdDate, String notificationLink, String content, boolean read, String recipientId) {
-        this.notificationId = notificationId;
+    public Notification() {
+
+    }
+
+    public Notification(Timestamp createdDate, String notificationLink, String content, String recipientId) {
         this.createdDate = createdDate;
         this.notificationLink = notificationLink;
         this.content = content;
-        this.read = read;
         this.recipientId = recipientId;
     }
 
-    public String getNotificationId() {
-        return notificationId;
+    public Notification(Timestamp createdDate, String notificationLink, String content, Boolean opened, String recipientId) {
+        this.createdDate = createdDate;
+        this.notificationLink = notificationLink;
+        this.content = content;
+        this.opened = opened;
+        this.recipientId = recipientId;
     }
 
-    public void setNotificationId(String notificationId) {
-        this.notificationId = notificationId;
+    public Notification(String id, Timestamp createdDate, String notificationLink, String content, boolean opened, String recipientId) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.notificationLink = notificationLink;
+        this.content = content;
+        this.opened = opened;
+        this.recipientId = recipientId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Timestamp getCreatedDate() {
@@ -77,12 +92,12 @@ public class Notification {
         this.content = content;
     }
 
-    public boolean isRead() {
-        return read;
+    public boolean isOpened() {
+        return opened;
     }
 
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setOpened(boolean opened) {
+        this.opened = opened;
     }
 
     public String getRecipientId() {
@@ -92,4 +107,5 @@ public class Notification {
     public void setRecipientId(String recipientId) {
         this.recipientId = recipientId;
     }
+
 }
