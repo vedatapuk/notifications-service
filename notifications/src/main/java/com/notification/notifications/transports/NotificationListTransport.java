@@ -1,7 +1,10 @@
 package com.notification.notifications.transports;
 
+import com.notification.notifications.annotations.ApiEntity;
+
 import java.util.List;
 
+@ApiEntity
 public class NotificationListTransport {
 
     private List<NotificationTransport> notificationTransports;

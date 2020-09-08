@@ -1,7 +1,10 @@
 package com.notification.notifications.transports;
 
+import com.notification.notifications.annotations.ApiEntity;
+
 import java.sql.Timestamp;
 
+@ApiEntity
 public class NotificationTransport {
 
     private String id;

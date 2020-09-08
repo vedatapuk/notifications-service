@@ -1,6 +1,7 @@
 package com.notification.notifications.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.notification.notifications.annotations.ApiEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "notification")
+@ApiEntity
 public class Notification {
 
     @Id
