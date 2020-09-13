@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QueuesConfiguration {
 
-//    @Value("${queue.notification}")
-//    private String notificationQueue;
-//
-//    @Bean(name = "notificationQueue")
-//    public Queue notificationQueue() {
-//        return new Queue(notificationQueue);
-//    }
+    @Value("${queue.notification}")
+    private String notificationQueue;
+
+    @Bean(name = "notificationQueue")
+    public Queue notificationQueue() {
+        return new Queue(notificationQueue);
+    }
 
 }
